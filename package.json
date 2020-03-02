@@ -1,0 +1,23 @@
+{
+  "name": "xvso",
+  "version": "1.0.0",
+  "description": "Javascript learning project game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sirWill/xvso.git"
+  },
+  "keywords": [
+    "game",
+    "javascript"
+  ],
+  "author": "Roman Spiridonov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sirWill/xvso/issues"
+  },
+  "homepage": "https://github.com/sirWill/xvso#readme"
+}

@@ -153,7 +153,7 @@ function checkVictory(row, column) {
       // Если вышли за границыы поля - переходим к следующему направлению
       if (y < 0 || x < 0 || y >= FIELD_SIZE || x >= FIELD_SIZE) break;
       // Если символ такой же, как у текущего игрока
-      if (field[x][y] === current) {
+      if (field[y][x] === current) {
         // Увеличиваем счётчик данного направления
         directions[direction].current++;
       } else {

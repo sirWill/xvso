@@ -12,16 +12,19 @@ function Game() {
     winnerLength: 5
   };
 
-  let field;
-  let fieldElement = document.getElementById("field");
-  let currentPlayerEl = document.getElementById("currentPlayer");
-  let sizeSettingsEl = document.querySelector('input[name="size"]'),
+  let fieldElement = document.getElementById("field"),
+    currentPlayerEl = document.getElementById("currentPlayer"),
+    sizeSettingsEl = document.querySelector('input[name="size"]'),
     winnerSettingsEl = document.querySelector('input[name="winner"]');
+
+  /** Массив с массивами для хранения поля */
+  let field;
   /** Текущий игрок */
   let current = "X";
   /** Счетчик ходов в игре */
   let steps = 0;
 
+  /** Объект для хранения статистики */
   let stats = {
     X: 0,
     Y: 0
@@ -241,13 +244,17 @@ function Game() {
   }
 
   function init() {
+    // Устанавливаем прослушивателей событий
     document.getElementById("newGame").addEventListener("click", resetGame);
 
     sizeSettingsEl.addEventListener("change", settingsListener);
     winnerSettingsEl.addEventListener("change", settingsListener);
+
+    // Стартуем игру
     resetGame();
   }
 
+  // Инициализируем игру
   init();
 }
 

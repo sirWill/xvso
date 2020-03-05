@@ -4,7 +4,9 @@ const FIELD_SIZE = 3;
 let field;
 let currentPlayerEl = document.getElementById("currentPlayer");
 
+/** Текущий игрок */
 let current = "X";
+/** Счетчик ходов в игре */
 let steps = 0;
 
 /**
@@ -20,12 +22,32 @@ function clearField() {
   }
 }
 
-function makeStep() {
+/**
+ * Функция для расчета хода
+ *
+ * @param {MouseEvent} e
+ */
+function makeStep(e) {
   // TODO: обработка хода игрока
   // Делаем ход
+  let button = e.target;
+  let i = button.getAttribute("row"),
+    j = button.getAttribute("col");
+  field[i][j] = current;
+  button.innerHTML = current;
+  button.setAttribute("disabled", true);
+  steps++;
   // Проверяем выигрыш, если он возможен
-  // Ничья?
+  if (steps >= 5) {
+    // Ничья?
+  }
   // Смена игрока
+  if (current === "X") {
+    current = "O";
+  } else {
+    current = "X";
+  }
+  currentPlayerEl.innerHTML = current;
 }
 
 function checkVictory() {
@@ -43,6 +65,8 @@ function makeField() {
   for (i = 0; i < field.length; i++) {
     for (j = 0; j < field[i].length; j++) {
       let button = document.createElement("button");
+      button.setAttribute("row", i);
+      button.setAttribute("col", j);
       button.addEventListener("click", makeStep);
       fieldElement.append(button);
     }

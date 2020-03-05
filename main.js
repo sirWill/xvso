@@ -10,7 +10,7 @@ let steps = 0;
 /**
  * Очистка всего поля и инициализация всех клеток поля нулями
  */
-function clearFieldd() {
+function clearField() {
   field = [];
   for (let i = 0; i < FIELD_SIZE; i++) {
     field.push(new Array());
@@ -32,10 +32,25 @@ function checkVictory() {
   // TODO: функция для проверки победителя
 }
 
+/**
+ * Отрисовка чистого игрового поля
+ */
 function makeField() {
-  // TODO: генерация пустого поля для игры
+  let i, j;
+  clearField();
+  let fieldElement = document.getElementById("game");
+  fieldElement.innerHTML = "";
+  for (i = 0; i < field.length; i++) {
+    for (j = 0; j < field[i].length; j++) {
+      let button = document.createElement("button");
+      button.addEventListener("click", makeStep);
+      fieldElement.append(button);
+    }
+  }
 }
 
 function resetGame() {
   // TODO: перезапуск игры
 }
+
+makeField();

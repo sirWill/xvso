@@ -13,6 +13,11 @@ let current = "X";
 /** Счетчик ходов в игре */
 let steps = 0;
 
+let stats = {
+  X: 0,
+  Y: 0
+};
+
 /**
  * Очистка всего поля и инициализация всех клеток поля нулями
  */
@@ -43,7 +48,9 @@ function makeStep(e) {
   steps++;
   // Проверяем выигрыш, если он возможен
   if (steps >= WINNER_LENGHT * 2 - 1) {
-    checkVictory(i, j);
+    if (checkVictory(i, j)) {
+      return;
+    }
     // Ничья?
     if (steps === FIELD_SIZE * FIELD_SIZE) {
       alert("Ничья!");
@@ -76,6 +83,7 @@ function gameWon() {
     }
   }
   // Добавить данные в статистику побед
+  stats[current]++;
 }
 
 /**
@@ -170,9 +178,10 @@ function checkVictory(row, column) {
       // Есть победитель!
       alert("Вы победили! Поздравляем " + current + " с победой!");
       gameWon();
-      return;
+      return true;
     }
   }
+  return false;
 }
 
 /**

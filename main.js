@@ -73,8 +73,14 @@ function makeField() {
   }
 }
 
+/**
+ * перезапуск игры
+ */
 function resetGame() {
-  // TODO: перезапуск игры
+  current = "X";
+  currentPlayerEl.innerHTML = current;
+  makeField();
 }
+document.getElementById("newGame").addEventListener("click", resetGame);
 
 makeField();

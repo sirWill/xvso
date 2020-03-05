@@ -5,6 +5,7 @@ const FIELD_SIZE = 3;
 const WINNER_LENGHT = 3;
 
 let field;
+let fieldElement = document.getElementById("game");
 let currentPlayerEl = document.getElementById("currentPlayer");
 
 /** Текущий игрок */
@@ -62,6 +63,18 @@ function makeStep(e) {
  */
 function gameWon() {
   // Обойти и заблокировать все клетки поля
+  for (let i in field) {
+    for (let j in field) {
+      i = parseInt(i);
+      j = parseInt(j);
+      if (field[i][j] === 0) {
+        fieldElement.children[i * FIELD_SIZE + j].setAttribute(
+          "disabled",
+          true
+        );
+      }
+    }
+  }
   // Добавить данные в статистику побед
 }
 
@@ -168,7 +181,6 @@ function checkVictory(row, column) {
 function makeField() {
   let i, j;
   clearField();
-  let fieldElement = document.getElementById("game");
   fieldElement.innerHTML = "";
   for (i = 0; i < field.length; i++) {
     for (j = 0; j < field[i].length; j++) {

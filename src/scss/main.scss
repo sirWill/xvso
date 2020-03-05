@@ -6,7 +6,7 @@ html {
   font-family: Arial, sans-serif;
 }
 
-$light: #fcfcfc;
+@import "./variables";
 
 #game {
   padding: 2rem;
@@ -42,20 +42,20 @@ $light: #fcfcfc;
     align-items: center;
     justify-content: center;
     // margin-bottom: 10px;
-    background: #c0e6fb;
-    border-color: lighten(#c0e6fb, 5%);
+    background: $lightblue;
+    border-color: lighten($lightblue, 5%);
     &:hover {
-      background-color: darken(#c0e6fb, 10);
+      background-color: darken($lightblue, 10);
     }
 
     &.-x {
-      background-color: lighten(#cc2f52, 35);
-      color: #cc2f52;
+      background-color: lighten($red, 35);
+      color: $red;
     }
 
     &.-o {
-      background-color: lighten(#90af29, 25);
-      color: darken(#90af29, 15);
+      background-color: lighten($green, 25);
+      color: darken($green, 15);
     }
 
     &[disabled] {

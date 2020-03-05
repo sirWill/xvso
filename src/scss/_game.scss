@@ -1,0 +1,95 @@
+#game {
+  padding: 2rem;
+
+  .current {
+    font-size: 1.5rem;
+    span {
+      font-weight: 500;
+      font-size: 1.5em;
+    }
+  }
+  .gamestat {
+    margin: 0;
+    font-size: 1.5rem;
+    span {
+      font-weight: 500;
+      font-size: 1.5em;
+    }
+  }
+}
+
+#field {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  background: rgba(0, 0, 0, 0.1);
+  button {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // margin-bottom: 10px;
+    background: $lightblue;
+    border-color: lighten($lightblue, 5%);
+    &:hover {
+      background-color: darken($lightblue, 10);
+    }
+
+    &.-x {
+      background-color: lighten($red, 35);
+      color: $red;
+    }
+
+    &.-o {
+      background-color: lighten($green, 25);
+      color: darken($green, 15);
+    }
+
+    &[disabled] {
+      opacity: 0.7;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:nth-child(7),
+    &:nth-child(8),
+    &:nth-child(9) {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.settings {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  h2 {
+    width: 100%;
+    margin-bottom: 0;
+  }
+  .label {
+    padding: 1rem 2rem 1rem 0;
+    display: flex;
+    flex-direction: column;
+    span {
+      font-size: 1.25rem;
+      margin-bottom: 0.25rem;
+    }
+    input {
+      padding: 0.25rem;
+      font-size: 1.25rem;
+    }
+  }
+}
+
+#newGame {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: gold;
+  font-size: 2rem;
+  border-radius: 4px;
+}

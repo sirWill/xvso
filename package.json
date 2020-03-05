@@ -23,5 +23,8 @@
   "devDependencies": {
     "parcel": "^1.12.4",
     "sass": "^1.26.2"
+  },
+  "dependencies": {
+    "normalize.css": "^8.0.1"
   }
 }

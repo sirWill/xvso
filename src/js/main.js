@@ -43,7 +43,6 @@ function clearField() {
  * @param {MouseEvent} e
  */
 function makeStep(e) {
-  // TODO: обработка хода игрока
   // Делаем ход
   let button = e.target;
   let i = button.getAttribute("row"),

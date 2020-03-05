@@ -1,5 +1,8 @@
 // Константы с параметрами игры
+/** Размер поля */
 const FIELD_SIZE = 3;
+/** Длина выигрышной последовательности */
+const WINNER_LENGHT = 3;
 
 let field;
 let currentPlayerEl = document.getElementById("currentPlayer");
@@ -38,8 +41,12 @@ function makeStep(e) {
   button.setAttribute("disabled", true);
   steps++;
   // Проверяем выигрыш, если он возможен
-  if (steps >= 5) {
+  if (steps >= WINNER_LENGHT * 2 - 1) {
+    checkVictory();
     // Ничья?
+    if (steps === FIELD_SIZE * FIELD_SIZE) {
+      alert("Ничья!");
+    }
   }
   // Смена игрока
   if (current === "X") {
@@ -52,6 +59,7 @@ function makeStep(e) {
 
 function checkVictory() {
   // TODO: функция для проверки победителя
+  // Если нашли победителя - останавливаем игру
 }
 
 /**
@@ -77,6 +85,7 @@ function makeField() {
  * перезапуск игры
  */
 function resetGame() {
+  steps = 0;
   current = "X";
   currentPlayerEl.innerHTML = current;
   makeField();

@@ -1,13 +1,19 @@
 // Константы с параметрами игры
-/** Размер поля */
-const FIELD_SIZE = 3;
-/** Длина выигрышной последовательности */
-const WINNER_LENGHT = 3;
+
+let settings = {
+  /** Размер поля */
+  fieldSize: 10,
+  /** Размер клетки поля в px */
+  cellSize: 50,
+  /** Длина выигрышной последовательности */
+  winnerLength: 5
+};
 
 let field;
 let fieldElement = document.getElementById("field");
 let currentPlayerEl = document.getElementById("currentPlayer");
-
+let sizeSettingsEl = document.querySelector('input[name="size"]'),
+  winnerSettingsEl = document.querySelector('input[name="winner"]');
 /** Текущий игрок */
 let current = "X";
 /** Счетчик ходов в игре */
@@ -23,9 +29,9 @@ let stats = {
  */
 function clearField() {
   field = [];
-  for (let i = 0; i < FIELD_SIZE; i++) {
+  for (let i = 0; i < settings.fieldSize; i++) {
     field.push(new Array());
-    for (let j = 0; j < FIELD_SIZE; j++) {
+    for (let j = 0; j < settings.fieldSize; j++) {
       field[i].push(0);
     }
   }
@@ -45,14 +51,15 @@ function makeStep(e) {
   field[i][j] = current;
   button.innerHTML = current;
   button.setAttribute("disabled", true);
+  button.classList.add("-" + current.toLowerCase());
   steps++;
   // Проверяем выигрыш, если он возможен
-  if (steps >= WINNER_LENGHT * 2 - 1) {
+  if (steps >= settings.winnerLength * 2 - 1) {
     if (checkVictory(i, j)) {
       return;
     }
     // Ничья?
-    if (steps === FIELD_SIZE * FIELD_SIZE) {
+    if (steps === settings.fieldSize * settings.fieldSize) {
       alert("Ничья!");
     }
   }
@@ -75,7 +82,7 @@ function gameWon() {
       i = parseInt(i);
       j = parseInt(j);
       if (field[i][j] === 0) {
-        fieldElement.children[i * FIELD_SIZE + j].setAttribute(
+        fieldElement.children[i * settings.fieldSize + j].setAttribute(
           "disabled",
           true
         );
@@ -93,7 +100,7 @@ function gameWon() {
  * @param {*} column
  */
 function checkVictory(row, column) {
-  const DIFFERENCE = WINNER_LENGHT - 1;
+  const DIFFERENCE = settings.winnerLength - 1;
   // Вокруг ячейки, где был совершен ход
   // Объект со смещениями по направлениям
   let directions = {
@@ -151,16 +158,17 @@ function checkVictory(row, column) {
       x += directions[direction].dx;
       dif++;
       // Если вышли за границыы поля - переходим к следующему направлению
-      if (y < 0 || x < 0 || y >= FIELD_SIZE || x >= FIELD_SIZE) break;
+      if (y < 0 || x < 0 || y >= settings.fieldSize || x >= settings.fieldSize)
+        break;
       // Если символ такой же, как у текущего игрока
       if (field[y][x] === current) {
         // Увеличиваем счётчик данного направления
         directions[direction].current++;
       } else {
         // Иначе выходим из цикла и идем к следующему направлению
-        dif = WINNER_LENGHT;
+        dif = settings.winnerLength;
       }
-    } while (dif < WINNER_LENGHT);
+    } while (dif < settings.winnerLength);
   }
   // Противоположные направления
   let opposites = [
@@ -191,11 +199,17 @@ function makeField() {
   let i, j;
   clearField();
   fieldElement.innerHTML = "";
+  fieldElement.style.width = fieldElement.style.height =
+    settings.fieldSize * settings.cellSize + "px";
+
   for (i = 0; i < field.length; i++) {
     for (j = 0; j < field[i].length; j++) {
       let button = document.createElement("button");
       button.setAttribute("row", i);
       button.setAttribute("col", j);
+      button.style.width = settings.cellSize + "px";
+      button.style.height = settings.cellSize + "px";
+      button.style.fontSize = settings.cellSize * 0.8 + "px";
       button.addEventListener("click", makeStep);
       fieldElement.append(button);
     }
@@ -211,6 +225,20 @@ function resetGame() {
   currentPlayerEl.innerHTML = current;
   makeField();
 }
-document.getElementById("newGame").addEventListener("click", resetGame);
 
-makeField();
+function settingsListener() {
+  let fieldSize = parseInt(sizeSettingsEl.value);
+  let winnerLength = parseInt(winnerSettingsEl.value);
+  settings.fieldSize = fieldSize;
+  settings.winnerLength = winnerLength;
+}
+
+function init() {
+  document.getElementById("newGame").addEventListener("click", resetGame);
+
+  sizeSettingsEl.addEventListener("change", settingsListener);
+  winnerSettingsEl.addEventListener("change", settingsListener);
+  resetGame();
+}
+
+init();

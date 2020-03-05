@@ -42,7 +42,7 @@ function makeStep(e) {
   steps++;
   // Проверяем выигрыш, если он возможен
   if (steps >= WINNER_LENGHT * 2 - 1) {
-    checkVictory();
+    checkVictory(i, j);
     // Ничья?
     if (steps === FIELD_SIZE * FIELD_SIZE) {
       alert("Ничья!");
@@ -57,9 +57,109 @@ function makeStep(e) {
   currentPlayerEl.innerHTML = current;
 }
 
-function checkVictory() {
-  // TODO: функция для проверки победителя
-  // Если нашли победителя - останавливаем игру
+/**
+ * Что происходит при завершении игры
+ */
+function gameWon() {
+  // Обойти и заблокировать все клетки поля
+  // Добавить данные в статистику побед
+}
+
+/**
+ * Функция для проверки победы в игре
+ *
+ * @param {*} row
+ * @param {*} column
+ */
+function checkVictory(row, column) {
+  const DIFFERENCE = WINNER_LENGHT - 1;
+  // Вокруг ячейки, где был совершен ход
+  // Объект со смещениями по направлениям
+  let directions = {
+    NW: {
+      dx: -1,
+      dy: -1,
+      current: 0
+    },
+    N: {
+      dx: 0,
+      dy: -1,
+      current: 0
+    },
+    NE: {
+      dx: 1,
+      dy: -1,
+      current: 0
+    },
+    E: {
+      dx: 1,
+      dy: 0,
+      current: 0
+    },
+    SE: {
+      dx: 1,
+      dy: 1,
+      current: 0
+    },
+    S: {
+      dx: 0,
+      dy: 1,
+      current: 0
+    },
+    SW: {
+      dx: -1,
+      dy: 1,
+      current: 0
+    },
+    W: {
+      dx: -1,
+      dy: 0,
+      current: 0
+    }
+  };
+  // Последовательно проверить по кругу все направления
+  let winCounter = 1;
+  let dif;
+  for (let direction in directions) {
+    dif = 0;
+    y = parseInt(row);
+    x = parseInt(column);
+    do {
+      // Смещаемся по направлению
+      y += directions[direction].dy;
+      x += directions[direction].dx;
+      dif++;
+      // Если вышли за границыы поля - переходим к следующему направлению
+      if (y < 0 || x < 0 || y >= FIELD_SIZE || x >= FIELD_SIZE) break;
+      // Если символ такой же, как у текущего игрока
+      if (field[x][y] === current) {
+        // Увеличиваем счётчик данного направления
+        directions[direction].current++;
+      } else {
+        // Иначе выходим из цикла и идем к следующему направлению
+        dif = WINNER_LENGHT;
+      }
+    } while (dif < WINNER_LENGHT);
+  }
+  // Противоположные направления
+  let opposites = [
+    ["NW", "SE"],
+    ["N", "S"],
+    ["NE", "SW"],
+    ["E", "W"]
+  ];
+  // Проверяем суммы противоположных направлений
+  for (let one of opposites) {
+    if (
+      directions[one[0]].current + directions[one[1]].current ===
+      DIFFERENCE
+    ) {
+      // Есть победитель!
+      alert("Вы победили! Поздравляем " + current + " с победой!");
+      gameWon();
+      return;
+    }
+  }
 }
 
 /**

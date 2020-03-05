@@ -152,7 +152,7 @@ function Game() {
     };
     // Последовательно проверить по кругу все направления
     let winCounter = 1;
-    let dif;
+    let dif, x, y;
     for (let direction in directions) {
       dif = 0;
       y = parseInt(row);

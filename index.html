@@ -7,10 +7,43 @@
     <link rel="stylesheet" href="./main.scss" />
   </head>
   <body>
-    <div id="game"></div>
-    <div id="info">
-      <p>Текущий игрок: <span id="currentPlayer">X</span></p>
-      <button id="newGame">Новая игра</button>
+    <div id="game">
+      <div id="field"></div>
+      <div id="info">
+        <div class="statistic">
+          <p class="current">
+            Текущий игрок: <span id="currentPlayer">X</span>
+          </p>
+          <p class="gamestat">Выиграли X: <span id="winnerX">0</span></p>
+          <p class="gamestat">Выиграли O: <span id="winnerO">0</span></p>
+        </div>
+        <div class="settings">
+          <h2>Параметры игры</h2>
+          <label class="label">
+            <span>Размер поля</span>
+            <input
+              type="number"
+              step="1"
+              min="3"
+              max="150"
+              name="size"
+              value="10"
+            />
+          </label>
+          <label class="label">
+            <span>Победная длина</span>
+            <input
+              type="number"
+              step="1"
+              min="3"
+              max="5"
+              name="winner"
+              value="5"
+            />
+          </label>
+        </div>
+        <button id="newGame">Новая игра</button>
+      </div>
     </div>
     <script src="./main.js"></script>
   </body>

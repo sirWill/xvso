@@ -5,7 +5,7 @@ const FIELD_SIZE = 3;
 const WINNER_LENGHT = 3;
 
 let field;
-let fieldElement = document.getElementById("game");
+let fieldElement = document.getElementById("field");
 let currentPlayerEl = document.getElementById("currentPlayer");
 
 /** Текущий игрок */

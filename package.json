@@ -25,6 +25,7 @@
     "sass": "^1.26.2"
   },
   "dependencies": {
+    "github-fork-ribbon-css": "^0.2.3",
     "normalize.css": "^8.0.1"
   }
 }

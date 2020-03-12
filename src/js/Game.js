@@ -196,7 +196,7 @@ function Game() {
       ["E", "W"]
     ];
     for (let one of opposites) {
-      if (directions[one[0]].sum + directions[one[1]].sum === DIFFERENCE) {
+      if (directions[one[0]].sum + directions[one[1]].sum >= DIFFERENCE) {
         // Есть победитель!
         alert("Вы победили! Поздравляем " + current + " с победой!");
         gameWon();

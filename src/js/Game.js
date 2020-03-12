@@ -106,79 +106,72 @@ function Game() {
    */
   function checkVictory(row, column) {
     const DIFFERENCE = settings.winnerLength - 1;
+    const X = parseInt(row),
+      Y = parseInt(column);
     // Вокруг ячейки, где был совершен ход
     // Объект со смещениями по направлениям
     let directions = {
       NW: {
         dx: -1,
         dy: -1,
-        current: 0
+        sum: 0
       },
       N: {
         dx: 0,
         dy: -1,
-        current: 0
+        sum: 0
       },
       NE: {
         dx: 1,
         dy: -1,
-        current: 0
+        sum: 0
       },
       E: {
         dx: 1,
         dy: 0,
-        current: 0
+        sum: 0
       },
       SE: {
         dx: 1,
         dy: 1,
-        current: 0
+        sum: 0
       },
       S: {
         dx: 0,
         dy: 1,
-        current: 0
+        sum: 0
       },
       SW: {
         dx: -1,
         dy: 1,
-        current: 0
+        sum: 0
       },
       W: {
         dx: -1,
         dy: 0,
-        current: 0
+        sum: 0
       }
     };
-    // Последовательно проверить по кругу все направления
-    let winCounter = 1;
-    let dif, x, y;
-    for (let direction in directions) {
-      dif = 0;
-      y = parseInt(row);
-      x = parseInt(column);
-      do {
-        // Смещаемся по направлению
-        y += directions[direction].dy;
-        x += directions[direction].dx;
-        dif++;
-        // Если вышли за границыы поля - переходим к следующему направлению
+    let dx, dy, tx, ty;
+    for (let one in directions) {
+      dx = directions[one].dx;
+      dy = directions[one].dy;
+      for (let t = 1; t <= DIFFERENCE; t++) {
+        tx = X + dx * t;
+        ty = Y + dy * t;
         if (
-          y < 0 ||
-          x < 0 ||
-          y >= settings.fieldSize ||
-          x >= settings.fieldSize
+          tx < 0 ||
+          tx > settings.fieldSize ||
+          ty < 0 ||
+          ty > settings.fieldSize
         )
           break;
-        // Если символ такой же, как у текущего игрока
-        if (field[y][x] === current) {
-          // Увеличиваем счётчик данного направления
-          directions[direction].current++;
+        if (field[tx][ty] === field[X][Y]) {
+          directions[one].sum++;
         } else {
-          // Иначе выходим из цикла и идем к следующему направлению
-          dif = settings.winnerLength;
+          break;
         }
-      } while (dif < settings.winnerLength);
+      }
     }
     // Противоположные направления
     let opposites = [

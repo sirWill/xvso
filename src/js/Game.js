@@ -27,7 +27,7 @@ function Game() {
   /** Объект для хранения статистики */
   let stats = {
     X: 0,
-    Y: 0
+    O: 0
   };
 
   /**
@@ -39,6 +39,19 @@ function Game() {
       field.push(new Array());
       for (let j = 0; j < settings.fieldSize; j++) {
         field[i].push(0);
+      }
+    }
+  }
+
+  /**
+   * Вывод статистики игр
+   */
+  function showStats() {
+    let elementPrefix = "winner";
+    for (let one in stats) {
+      let el = document.getElementById(elementPrefix + one);
+      if (el) {
+        el.innerHTML = stats[one];
       }
     }
   }
@@ -96,6 +109,8 @@ function Game() {
     }
     // Добавить данные в статистику побед
     stats[current]++;
+    window.localStorage.setItem("stats", JSON.stringify(stats));
+    showStats();
   }
 
   /**
@@ -180,12 +195,8 @@ function Game() {
       ["NE", "SW"],
       ["E", "W"]
     ];
-    // Проверяем суммы противоположных направлений
     for (let one of opposites) {
-      if (
-        directions[one[0]].current + directions[one[1]].current ===
-        DIFFERENCE
-      ) {
+      if (directions[one[0]].sum + directions[one[1]].sum === DIFFERENCE) {
         // Есть победитель!
         alert("Вы победили! Поздравляем " + current + " с победой!");
         gameWon();
@@ -242,6 +253,13 @@ function Game() {
 
     sizeSettingsEl.addEventListener("change", settingsListener);
     winnerSettingsEl.addEventListener("change", settingsListener);
+
+    // Загружаем текущую статистику
+    let stat = window.localStorage.getItem("stats");
+    if (typeof stat === "string") {
+      stats = JSON.parse(stat);
+    }
+    showStats();
 
     // Стартуем игру
     resetGame();

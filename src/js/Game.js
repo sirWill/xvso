@@ -240,6 +240,18 @@ function Game() {
     makeField();
   }
 
+  /**
+   * Сброс статистики игр
+   */
+  function resetStat() {
+    stats = {
+      X: 0,
+      O: 0
+    };
+    window.localStorage.setItem("stats", JSON.stringify(stats));
+    showStats();
+  }
+
   function settingsListener() {
     let fieldSize = parseInt(sizeSettingsEl.value);
     let winnerLength = parseInt(winnerSettingsEl.value);
@@ -250,6 +262,7 @@ function Game() {
   function init() {
     // Устанавливаем прослушивателей событий
     document.getElementById("newGame").addEventListener("click", resetGame);
+    document.getElementById("resetStat").addEventListener("click", resetStat);
 
     sizeSettingsEl.addEventListener("change", settingsListener);
     winnerSettingsEl.addEventListener("change", settingsListener);

@@ -252,9 +252,33 @@ function Game() {
     showStats();
   }
 
-  function settingsListener() {
+  /**
+   * Отслеживаем изменение параметров
+   *
+   * @param {Event} e
+   */
+  function settingsListener(e) {
     let fieldSize = parseInt(sizeSettingsEl.value);
     let winnerLength = parseInt(winnerSettingsEl.value);
+    if (fieldSize > 150) {
+      fieldSize = 150;
+    } else if (fieldSize < 3) {
+      fieldSize = 3;
+    } else if (isNaN(fieldSize)) {
+      fieldSize = 10;
+    }
+    if (winnerLength > 5) {
+      winnerLength = 5;
+    } else if (winnerLength < 3) {
+      winnerLength = 3;
+    } else if (isNaN(winnerLength)) {
+      winnerLength = 5;
+    }
+    if (fieldSize < winnerLength) {
+      fieldSize = winnerLength;
+    }
+    sizeSettingsEl.value = fieldSize;
+    winnerSettingsEl.value = winnerLength;
     settings.fieldSize = fieldSize;
     settings.winnerLength = winnerLength;
   }
@@ -266,6 +290,8 @@ function Game() {
 
     sizeSettingsEl.addEventListener("change", settingsListener);
     winnerSettingsEl.addEventListener("change", settingsListener);
+    sizeSettingsEl.addEventListener("blur", settingsListener);
+    winnerSettingsEl.addEventListener("blur", settingsListener);
 
     // Загружаем текущую статистику
     let stat = window.localStorage.getItem("stats");

@@ -176,9 +176,9 @@ function Game() {
         ty = Y + dy * t;
         if (
           tx < 0 ||
-          tx > settings.fieldSize ||
+          tx >= settings.fieldSize ||
           ty < 0 ||
-          ty > settings.fieldSize
+          ty >= settings.fieldSize
         )
           break;
         if (field[tx][ty] === field[X][Y]) {

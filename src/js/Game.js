@@ -12,6 +12,18 @@ function Game() {
     winnerLength: 5
   };
 
+  // Замороженный объект со смещениями по направлениям
+  const derivatives = Object.freeze({
+    NW: { dx: -1, dy: -1 },
+    N: { dx: 0, dy: -1 },
+    NE: { dx: 1, dy: -1 },
+    E: { dx: 1, dy: 0 },
+    SE: { dx: 1, dy: 1 },
+    S: { dx: 0, dy: 1 },
+    SW: { dx: -1, dy: 1 },
+    W: { dx: -1, dy: 0 }
+  });
+
   let fieldElement = document.getElementById("field"),
     currentPlayerEl = document.getElementById("currentPlayer"),
     sizeSettingsEl = document.querySelector('input[name="size"]'),
@@ -124,53 +136,20 @@ function Game() {
     const X = parseInt(row),
       Y = parseInt(column);
     // Вокруг ячейки, где был совершен ход
-    // Объект со смещениями по направлениям
     let directions = {
-      NW: {
-        dx: -1,
-        dy: -1,
-        sum: 0
-      },
-      N: {
-        dx: 0,
-        dy: -1,
-        sum: 0
-      },
-      NE: {
-        dx: 1,
-        dy: -1,
-        sum: 0
-      },
-      E: {
-        dx: 1,
-        dy: 0,
-        sum: 0
-      },
-      SE: {
-        dx: 1,
-        dy: 1,
-        sum: 0
-      },
-      S: {
-        dx: 0,
-        dy: 1,
-        sum: 0
-      },
-      SW: {
-        dx: -1,
-        dy: 1,
-        sum: 0
-      },
-      W: {
-        dx: -1,
-        dy: 0,
-        sum: 0
-      }
+      NW: 0,
+      N: 0,
+      NE: 0,
+      E: 0,
+      SE: 0,
+      S: 0,
+      SW: 0,
+      W: 0
     };
     let dx, dy, tx, ty;
     for (let one in directions) {
-      dx = directions[one].dx;
-      dy = directions[one].dy;
+      dx = derivatives[one].dx;
+      dy = derivatives[one].dy;
       for (let t = 1; t <= DIFFERENCE; t++) {
         tx = X + dx * t;
         ty = Y + dy * t;
@@ -182,7 +161,7 @@ function Game() {
         )
           break;
         if (field[tx][ty] === field[X][Y]) {
-          directions[one].sum++;
+          directions[one]++;
         } else {
           break;
         }
@@ -196,7 +175,7 @@ function Game() {
       ["E", "W"]
     ];
     for (let one of opposites) {
-      if (directions[one[0]].sum + directions[one[1]].sum >= DIFFERENCE) {
+      if (directions[one[0]] + directions[one[1]] >= DIFFERENCE) {
         // Есть победитель!
         alert("Вы победили! Поздравляем " + current + " с победой!");
         gameWon();

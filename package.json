@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/sirWill/xvso#readme",
   "devDependencies": {
-    "parcel": "^2.8.1",
+    "parcel": "^2.16.4",
     "sass": "^1.26.2"
   },
   "dependencies": {
